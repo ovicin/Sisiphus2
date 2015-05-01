@@ -79,6 +79,9 @@ public class OSCHandler : MonoBehaviour
 	
 	#region Member Variables
 	private  float xAxis, yAxis;
+	private float evtTimer = 0.0f;
+	private int rotTemp = 0; 
+	private int rot = 0; 
 	private static OSCHandler _instance = null;
 	private Dictionary<string, ClientLog> _clients = new Dictionary<string, ClientLog>();
 	private Dictionary<string, ServerLog> _servers = new Dictionary<string, ServerLog>();
@@ -207,18 +210,24 @@ public class OSCHandler : MonoBehaviour
     void OnPacketReceived(OSCServer server, OSCPacket packet)
     {
 		Debug.Log ("OSC Packet received");
+
+		rotTemp ++;
+
 		//Debug.Log (packet.Address); 
 		//Debug.Log ("1 -> " + packet.Data [0]);
-		xAxis = (float)packet.Data [0];
-		yAxis = (float)packet.Data [1];
+		//xAxis = (float)packet.Data [0];
+		//yAxis = (float)packet.Data [1];
 		//Debug.Log ("2 -> " + packet.Data [1]);
 		//Debug.Log ("3 ->" + packet.Data [2]);
 		//Debug.Log ("4 ->" + packet.Data[4] );
-		Debug.Log ("Capacity"+packet.Data.Capacity);
+		//Debug.Log ("Capacity"+packet.Data.Capacity);
 
 
     }
-	
+
+	public int getRPS(){
+		return rot;
+	}
 	/// <summary>
 	/// Sends an OSC message to a specified client, given its clientId (defined at the OSC client construction),
 	/// OSC address and a single value. Also updates the client log.
@@ -289,12 +298,27 @@ public class OSCHandler : MonoBehaviour
 			Debug.LogError(string.Format("Can't send OSC messages to {0}. Client doesn't exist.", clientId));
 		}
 	}
-	
+	private void UpdateTimer(){
+		evtTimer += Time.deltaTime;
+
+		if (evtTimer > 1) {
+
+			ResetTimer();
+			rot = rotTemp;
+			rotTemp = 0;
+		}
+	}
+
+	private void ResetTimer(){
+		evtTimer = 0.0f;
+	}
 	/// <summary>
 	/// Updates clients and servers logs.
 	/// </summary>
 	public void UpdateLogs()
 	{
+		UpdateTimer ();
+		Debug.Log ("Timer " + evtTimer);
 		foreach(KeyValuePair<string,ServerLog> pair in _servers)
 		{
 			if(_servers[pair.Key].server.LastReceivedPacket != null)

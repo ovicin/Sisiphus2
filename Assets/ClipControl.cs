@@ -8,6 +8,12 @@ public class ClipControl : MonoBehaviour {
 		ACCEL1,
 		ACCEL2
 	};
+
+	enum enRPSControlStates{
+		CLIMBING,
+		FALLING
+	};
+	enRPSControlStates RPSState;
 	enAccelState state; 
 	float oldxAxisAccel = 0;
 	float currentThreshold = 0;
@@ -33,6 +39,8 @@ public class ClipControl : MonoBehaviour {
 		currentMaxPlaybackTime = maxPlaybackTime / PlaybackTimeDivider;
 
 		state = enAccelState.INIT;
+
+		RPSState = enRPSControlStates.CLIMBING;
 	}
 	
 	// Update is called once per frame
@@ -52,9 +60,47 @@ public class ClipControl : MonoBehaviour {
 
 		//Debug.Log (playbackTime + " " + xAxisAccel);
 
-		Set2AxisPlaybackDividerSpeed ();
+		updateRPS ();
 
 
+	}
+
+	private void updateRPS(){
+		switch (RPSState) {
+		case enRPSControlStates.CLIMBING:
+			if (playbackTime < 0.97)
+				RPS_Control();
+			else
+				RPSState = enRPSControlStates.FALLING;
+			break;
+		case enRPSControlStates.FALLING:
+			if (playbackTime > 0.02) 
+				MoveBackward();
+			else 
+				RPSState = enRPSControlStates.CLIMBING;
+			break;
+		}
+	}
+	private void RPS_Control(){
+		if (OSCHandler.Instance.getRPS () > 3) {
+			//move FW
+			MoveForward();
+		} else {
+			//move backwards
+			MoveBackward();
+		}
+	}
+	private void MoveForward(){
+		if (playbackTime < 0.97)
+			GetComponent<Animator> ().speed = 3;
+		else
+			GetComponent<Animator> ().speed = 0;
+	}
+	private void MoveBackward(){
+		if (playbackTime > 0.02) 
+			GetComponent<Animator> ().speed = -3;
+		else
+			GetComponent<Animator> ().speed = 0;
 	}
 
 	private void SetSpeedSimple(){

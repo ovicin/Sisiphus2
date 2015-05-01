@@ -4,10 +4,14 @@ using UnityOSC;
 
 public class PlayMovieTexture : MonoBehaviour {
 
+	MovieTexture movie;
 	// Use this for initialization
 	void Start () {
-		((MovieTexture)GetComponent<Renderer>().material.mainTexture).Play();
 
+		movie = ((MovieTexture)GetComponent<Renderer>().material.mainTexture);
+		movie.Play();
+		//Debug.Log ("Movie Duration " + movie.duration);
+		movie.loop = true;
 	}
 	
 	// Update is called once per frame
