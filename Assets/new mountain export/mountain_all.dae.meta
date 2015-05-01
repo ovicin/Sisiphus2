@@ -1,0 +1,159 @@
+fileFormatVersion: 2
+guid: d024e06ebb30d4527afa76911324f4e6
+timeCreated: 1430248473
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: bezier1
+    100002: bezier2
+    100004: bezier3
+    100006: camera1
+    100008: curve1
+    100010: curve2
+    100012: joint1
+    100014: joint10
+    100016: joint11
+    100018: joint17
+    100020: joint18
+    100022: joint19
+    100024: joint2
+    100026: joint20
+    100028: joint21
+    100030: joint22
+    100032: joint23
+    100034: joint24
+    100036: joint3
+    100038: joint30
+    100040: joint31
+    100042: joint32
+    100044: joint33
+    100046: joint34
+    100048: joint4
+    100050: joint5
+    100052: joint6
+    100054: joint7
+    100056: joint8
+    100058: joint9
+    100060: //RootNode
+    100062: polySurface1
+    100064: pSphere1
+    100066: pSphere2
+    100068: pSphere4
+    100070: python
+    100072: sysiphus_static
+    100074: sysiphus_static_Body
+    100076: transform1
+    400000: bezier1
+    400002: bezier2
+    400004: bezier3
+    400006: camera1
+    400008: curve1
+    400010: curve2
+    400012: joint1
+    400014: joint10
+    400016: joint11
+    400018: joint17
+    400020: joint18
+    400022: joint19
+    400024: joint2
+    400026: joint20
+    400028: joint21
+    400030: joint22
+    400032: joint23
+    400034: joint24
+    400036: joint3
+    400038: joint30
+    400040: joint31
+    400042: joint32
+    400044: joint33
+    400046: joint34
+    400048: joint4
+    400050: joint5
+    400052: joint6
+    400054: joint7
+    400056: joint8
+    400058: joint9
+    400060: //RootNode
+    400062: polySurface1
+    400064: pSphere1
+    400066: pSphere2
+    400068: pSphere4
+    400070: python
+    400072: sysiphus_static
+    400074: sysiphus_static_Body
+    400076: transform1
+    2300000: polySurface1
+    2300002: pSphere1
+    2300004: pSphere2
+    2300006: pSphere4
+    3300000: polySurface1
+    3300002: pSphere1
+    3300004: pSphere2
+    3300006: pSphere4
+    4300000: polySurface1
+    4300002: pSphere1
+    4300004: sysiphus_static_Body
+    4300006: pSphere4
+    4300008: pSphere2
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: sysiphus_static_Body
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
