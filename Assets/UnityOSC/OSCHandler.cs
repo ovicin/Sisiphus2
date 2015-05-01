@@ -318,7 +318,7 @@ public class OSCHandler : MonoBehaviour
 	public void UpdateLogs()
 	{
 		UpdateTimer ();
-		Debug.Log ("Timer " + evtTimer);
+
 		foreach(KeyValuePair<string,ServerLog> pair in _servers)
 		{
 			if(_servers[pair.Key].server.LastReceivedPacket != null)

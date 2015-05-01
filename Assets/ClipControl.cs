@@ -20,7 +20,7 @@ public class ClipControl : MonoBehaviour {
 	float xAxisThreshold = 30;
 	float yAxisThreshold = 70;
 	float minPlaybackTime = 0.02f;
-	float maxPlaybackTime = 0.98f;
+	float maxPlaybackTime = 0.97f;
 	float PlaybackTimeDivider = 4;
 	float currentMinPlaybackTime = 0;
 	float currentMaxPlaybackTime = 0;
@@ -68,13 +68,13 @@ public class ClipControl : MonoBehaviour {
 	private void updateRPS(){
 		switch (RPSState) {
 		case enRPSControlStates.CLIMBING:
-			if (playbackTime < 0.97)
+			if (playbackTime < maxPlaybackTime)
 				RPS_Control();
 			else
 				RPSState = enRPSControlStates.FALLING;
 			break;
 		case enRPSControlStates.FALLING:
-			if (playbackTime > 0.02) 
+			if (playbackTime > minPlaybackTime) 
 				MoveBackward();
 			else 
 				RPSState = enRPSControlStates.CLIMBING;
@@ -91,20 +91,20 @@ public class ClipControl : MonoBehaviour {
 		}
 	}
 	private void MoveForward(){
-		if (playbackTime < 0.97)
+		if (playbackTime < maxPlaybackTime)
 			GetComponent<Animator> ().speed = 3;
 		else
 			GetComponent<Animator> ().speed = 0;
 	}
 	private void MoveBackward(){
-		if (playbackTime > 0.02) 
+		if (playbackTime > minPlaybackTime) 
 			GetComponent<Animator> ().speed = -3;
 		else
 			GetComponent<Animator> ().speed = 0;
 	}
 
 	private void SetSpeedSimple(){
-		if ((xAxisAccel >= 50) && (playbackTime > 0.02)) {
+		if ((xAxisAccel >= 50) && (playbackTime > minPlaybackTime)) {
 			GetComponent<Animator> ().speed = -3;
 		} else if ((xAxisAccel < 50) && (playbackTime < 0.99)) {
 			GetComponent<Animator> ().speed = 3;
