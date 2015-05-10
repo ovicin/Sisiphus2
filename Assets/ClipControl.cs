@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SystemDefs;
 
 public class ClipControl : MonoBehaviour {
 
@@ -9,11 +10,14 @@ public class ClipControl : MonoBehaviour {
 		ACCEL2
 	};
 
+	/*
 	enum enRPSControlStates{
+		STANDBY,
 		CLIMBING,
 		FALLING
 	};
 	enRPSControlStates RPSState;
+	*/
 	enAccelState state; 
 	float oldxAxisAccel = 0;
 	float currentThreshold = 0;
@@ -40,7 +44,8 @@ public class ClipControl : MonoBehaviour {
 
 		state = enAccelState.INIT;
 
-		RPSState = enRPSControlStates.CLIMBING;
+		//RPSState = enRPSControlStates.CLIMBING;
+		CurrentState.Instance.SetCurrentState (SystemStates.CLIMBING);
 	}
 	
 	// Update is called once per frame
@@ -66,18 +71,20 @@ public class ClipControl : MonoBehaviour {
 	}
 
 	private void updateRPS(){
-		switch (RPSState) {
-		case enRPSControlStates.CLIMBING:
+		switch (CurrentState.Instance.GetCurrentState()) {
+		case SystemStates.CLIMBING:
 			if (playbackTime < maxPlaybackTime)
 				RPS_Control();
 			else
-				RPSState = enRPSControlStates.FALLING;
+				//RPSState = enRPSControlStates.FALLING;
+				CurrentState.Instance.SetCurrentState(SystemStates.FALLING);
 			break;
-		case enRPSControlStates.FALLING:
+		case SystemStates.FALLING:
 			if (playbackTime > minPlaybackTime) 
 				MoveBackward();
 			else 
-				RPSState = enRPSControlStates.CLIMBING;
+				//RPSState = enRPSControlStates.CLIMBING;
+				CurrentState.Instance.SetCurrentState(SystemStates.CLIMBING);
 			break;
 		}
 	}

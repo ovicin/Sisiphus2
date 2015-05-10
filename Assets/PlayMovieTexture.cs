@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityOSC;
+using SystemDefs;
 
 public class PlayMovieTexture : MonoBehaviour {
+	public  SystemStates PlayInState;
+
 	bool play;
 	MovieTexture movie;
 	// Use this for initialization
@@ -23,11 +26,20 @@ public class PlayMovieTexture : MonoBehaviour {
 		movie.loop = true;
 
 
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (CurrentState.Instance.GetCurrentState () == PlayInState) {
+			GetComponent<Renderer> ().enabled = true;
+			play = true;
+			movie.Play();
+		} else {
+			GetComponent<Renderer> ().enabled = false;
+			play = false;
+			movie.Stop();
+		}
+		/*
 		if (Input.GetMouseButtonDown (0)) 
 		if (play) {
 			GetComponent<Renderer> ().enabled = false;
@@ -38,6 +50,7 @@ public class PlayMovieTexture : MonoBehaviour {
 			play = true;
 			movie.Play();
 		}
+		*/
 		/*
 		Dictionary<string, ClientLog> clients = new Dictionary<string,ClientLog>();
 		clients = OSCHandler.Instance.Clients;
