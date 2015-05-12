@@ -34,9 +34,11 @@ public class ClipControl : MonoBehaviour {
 
 
 	bool play;
+	bool manual;
 	// Use this for initialization
 	void Start () {
 		play = true;
+		manual = false;
 
 		OSCHandler.Instance.Init();
 		currentMinPlaybackTime = minPlaybackTime;
@@ -45,7 +47,7 @@ public class ClipControl : MonoBehaviour {
 		state = enAccelState.INIT;
 
 		//RPSState = enRPSControlStates.CLIMBING;
-		CurrentState.Instance.SetCurrentState (SystemStates.CLIMBING);
+		CurrentState.Instance.SetCurrentState (SystemStates.STANDBY);
 	}
 	
 	// Update is called once per frame
@@ -64,15 +66,40 @@ public class ClipControl : MonoBehaviour {
 		playbackTime = currentState.normalizedTime % 1;
 
 		//Debug.Log (playbackTime + " " + xAxisAccel);
+		if (Input.GetKey(KeyCode.Alpha1)){
+			Debug.Log ("STANDBY");
+			manual = true;
+		    CurrentState.Instance.SetCurrentState(SystemStates.STANDBY);
+		}
+		if (Input.GetKey(KeyCode.Alpha2)){
+			Debug.Log ("CLIMBING");
+			manual = true;
+			CurrentState.Instance.SetCurrentState(SystemStates.CLIMBING);
+		}
+		if (Input.GetKey(KeyCode.Alpha3)){
+			Debug.Log ("FALLING");
+			manual = true;
+			CurrentState.Instance.SetCurrentState(SystemStates.FALLING);
+		}
 
-		updateRPS ();
+		if(!manual)
+			updateRPS ();
 
 
 	}
 
 	private void updateRPS(){
+
 		switch (CurrentState.Instance.GetCurrentState()) {
+		case SystemStates.STANDBY:
+			Debug.Log ("STANDBY");
+			if (OSCHandler.Instance.getRPS () > 3) {
+				//switch to climbing if there is some movement
+				CurrentState.Instance.SetCurrentState(SystemStates.CLIMBING);
+			} 
+			break;
 		case SystemStates.CLIMBING:
+			Debug.Log ("CLIMBING");
 			if (playbackTime < maxPlaybackTime)
 				RPS_Control();
 			else
@@ -80,11 +107,13 @@ public class ClipControl : MonoBehaviour {
 				CurrentState.Instance.SetCurrentState(SystemStates.FALLING);
 			break;
 		case SystemStates.FALLING:
+			Debug.Log ("FALLING");
 			if (playbackTime > minPlaybackTime) 
 				MoveBackward();
 			else 
 				//RPSState = enRPSControlStates.CLIMBING;
-				CurrentState.Instance.SetCurrentState(SystemStates.CLIMBING);
+				//if we reached the begining switch to STANDBY
+				CurrentState.Instance.SetCurrentState(SystemStates.STANDBY);
 			break;
 		}
 	}
@@ -94,7 +123,10 @@ public class ClipControl : MonoBehaviour {
 			MoveForward();
 		} else {
 			//move backwards
-			MoveBackward();
+			//MoveBackward();
+
+			/* change to falling */
+			CurrentState.Instance.SetCurrentState(SystemStates.FALLING);
 		}
 	}
 	private void MoveForward(){
