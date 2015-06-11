@@ -23,7 +23,11 @@ public class PlayMovieTexture : MonoBehaviour {
 		movie = ((MovieTexture)GetComponent<Renderer>().material.mainTexture);
 		movie.Play();
 		//Debug.Log ("Movie Duration " + movie.duration);
-		movie.loop = true;
+		if (PlayInState == SystemStates.FALLING) {
+			movie.loop = false;
+		} else {
+			movie.loop = true;
+		}
 
 
 	}

@@ -23,7 +23,7 @@ public class ClipControl : MonoBehaviour {
 	float currentThreshold = 0;
 	float xAxisThreshold = 30;
 	float yAxisThreshold = 70;
-	float minPlaybackTime = 0.02f;
+	float minPlaybackTime = 0.05f;
 	float maxPlaybackTime = 0.97f;
 	float PlaybackTimeDivider = 4;
 	float currentMinPlaybackTime = 0;
@@ -93,7 +93,12 @@ public class ClipControl : MonoBehaviour {
 		switch (CurrentState.Instance.GetCurrentState()) {
 		case SystemStates.STANDBY:
 			Debug.Log ("STANDBY");
-			if (OSCHandler.Instance.getRPS () > 3) {
+			GetComponent<Animator> ().speed = 0;
+			//GetComponent<Animator> ().playbackTime = 0;
+			Debug.Log (GetComponent<Animator> ().GetCurrentAnimatorStateInfo(0).length);
+
+
+			if (OSCHandler.Instance.getRPS () > 1) {
 				//switch to climbing if there is some movement
 				CurrentState.Instance.SetCurrentState(SystemStates.CLIMBING);
 			} 
@@ -118,7 +123,7 @@ public class ClipControl : MonoBehaviour {
 		}
 	}
 	private void RPS_Control(){
-		if (OSCHandler.Instance.getRPS () > 3) {
+		if (OSCHandler.Instance.getRPS () > 1) {
 			//move FW
 			MoveForward();
 		} else {
@@ -137,7 +142,7 @@ public class ClipControl : MonoBehaviour {
 	}
 	private void MoveBackward(){
 		if (playbackTime > minPlaybackTime) 
-			GetComponent<Animator> ().speed = -3;
+			GetComponent<Animator> ().speed = -10;
 		else
 			GetComponent<Animator> ().speed = 0;
 	}
