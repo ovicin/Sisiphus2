@@ -40,6 +40,8 @@ public class ClipControl : MonoBehaviour {
 		play = true;
 		manual = false;
 
+		Application.runInBackground = true;
+
 		OSCHandler.Instance.Init();
 		currentMinPlaybackTime = minPlaybackTime;
 		currentMaxPlaybackTime = maxPlaybackTime / PlaybackTimeDivider;
